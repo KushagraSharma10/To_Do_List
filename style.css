@@ -1,3 +1,4 @@
+@charset "UTF-8";
 * {
   margin: 0;
   padding: 0;
@@ -82,7 +83,6 @@ main {
 }
 
 .main-content {
-  position: relative;
   position: fixed;
   margin-top: 1vw;
   top: 0;
@@ -120,29 +120,60 @@ main {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 1vw 1.3vw;
+  padding: 0.9vw 1.3vw;
   border-radius: 0.7vw;
   transition: background-color 0.2s ease-in-out;
   background-color: rgba(0, 0, 0, 0.5294117647);
   color: #F5F5F5;
 }
 .main-content .tasks .task:hover {
-  background-color: #333333;
+  background-color: rgba(42, 38, 38, 0.662745098);
 }
 .main-content .tasks .task .text-check {
   display: flex;
   align-items: center;
   gap: 0.7vw;
+  position: relative;
+}
+.main-content .tasks .task .text-check input[type=checkbox] {
+  -webkit-appearance: none;
+     -moz-appearance: none;
+          appearance: none;
+  width: 1.3em;
+  height: 1.3em;
+  border: 2px solid #7a7a7a;
+  border-radius: 50%;
+  cursor: pointer;
+  transition: all 0.2s ease-in-out;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+.main-content .tasks .task .text-check input[type=checkbox]:checked {
+  background-color: #4CAF50;
+  border-color: #4CAF50;
+  position: relative;
+}
+.main-content .tasks .task .text-check input[type=checkbox]:checked::before {
+  content: "✓";
+  color: white;
+  font-size: 0.8em;
+  font-weight: bold;
+}
+.main-content .tasks .task .text-check input[type=checkbox]:hover {
+  border-color: #4CAF50;
 }
 .main-content .tasks .task .text-check label {
-  font-size: 1em;
+  font-size: 0.9em;
+  cursor: pointer;
 }
 .main-content .tasks .task i {
-  font-size: 1.5em;
+  font-size: 1.3em;
   color: #F5F5F5;
 }
 .main-content .add-task {
   width: 100%;
+  position: relative;
   margin-top: 4vw;
 }
 .main-content .add-task input {
@@ -151,7 +182,27 @@ main {
   border-radius: 0.7vw;
   border: none;
   outline: none;
-  font-size: 1em;
+  font-size: 0.9em;
   color: #F5F5F5;
-  background-color: rgba(0, 0, 0, 0.9058823529);
+  background-color: rgba(0, 0, 0, 0.7058823529);
+}
+.main-content .add-task button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: absolute;
+  right: 0.5vw;
+  top: 0.4vw;
+  border-radius: 0.7vw;
+  align-items: center;
+  background-color: #76FF03;
+  gap: 0.4vw;
+  border: none;
+  padding: 0.4vw 1vw;
+  font-size: 0.9em;
+  font-weight: 600;
+  cursor: pointer;
+}
+.main-content .add-task button i {
+  font-size: 1.5em;
 }/*# sourceMappingURL=style.css.map */

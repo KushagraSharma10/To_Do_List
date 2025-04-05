@@ -100,7 +100,6 @@ main{
 }
 
 .main-content{
-    position: relative;
     position: fixed;
     margin-top: 1vw;
     top: 0;
@@ -150,16 +149,15 @@ main{
             align-items: center;
             justify-content: space-between;
         
-            padding: 1vw 1.3vw;
+            padding: .9vw 1.3vw;
             border-radius: .7vw;
             transition: background-color 0.2s ease-in-out;
             background-color: #00000087;
             color: #F5F5F5;
-            // backdrop-filter: blur(15vw);
             
 
             &:hover{
-                background-color: #333333;
+                background-color: #2a2626a9;
             }
 
 
@@ -167,14 +165,53 @@ main{
                 display: flex;
                 align-items: center;
                 gap: .7vw;
+                position: relative; 
 
-                label{
-                    font-size: 1em;
-                }
+                input[type="checkbox"] {
+                    appearance: none;
+                    // -webkit-appearance: none;
+                    width: 1.3em;
+                    height: 1.3em;
+                    border: 2px solid #7a7a7a; // Gray border (unchecked)
+                    border-radius: 50%; // Makes it round
+                    cursor: pointer;
+                    transition: all 0.2s ease-in-out;
+                    display: inline-flex;
+                    align-items: center;
+                    justify-content: center;
+                
+                    // Checked state (green background + tick)
+                    &:checked {
+                      background-color: #4CAF50; // Green fill
+                      border-color: #4CAF50;
+                      position: relative;
+                
+                      // Tick mark (✓) using background-image
+                      &::before {
+                        content: "✓";
+                        color: white;
+                        font-size: 0.8em;
+                        font-weight: bold;
+                      }
+                    }
+                
+                    // Hover effect
+                    &:hover {
+                      border-color: #4CAF50;
+                    }
+                  }
+                
+                  label {
+                    font-size: 0.9em;
+                    cursor: pointer;
+                  }
+
+                
+                
             }
 
             i{
-                font-size: 1.5em;
+                font-size: 1.3em;
                 color: #F5F5F5;
             }
         }
@@ -182,18 +219,48 @@ main{
 
     .add-task{
         width: 100%;
+        position: relative;
         margin-top: 4vw;
         
 
         input{
             width: 100%;
+           
             padding: 1vw;
             border-radius: .7vw;
             border: none;
             outline: none;
-            font-size: 1em;
+            font-size: .9em;
             color: #F5F5F5;
-            background-color: #000000e7;
+            background-color: #000000b4;
+
+        
+        }
+
+        
+
+        button {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: absolute;
+            right: .5vw;
+            top: .4vw;
+            border-radius: .7vw;
+            align-items: center;
+            background-color: #76FF03;
+            gap: .4vw;
+            border: none;
+            padding: .4vw 1vw;
+            font-size: .9em;
+            font-weight: 600;
+            cursor: pointer;
+            // color: ;
+
+            i{
+                font-size: 1.5em;
+
+            }
         }
     }
 }
