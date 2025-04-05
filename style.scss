@@ -2,7 +2,7 @@
     margin: 0;
     padding: 0;
     box-sizing: border-box;
-    font-family: 'Helvetica Now Display';
+    font-family: 'Plus Jakarta Sans';
 }
 
 html,body{
@@ -44,6 +44,8 @@ main{
                 object-fit: cover;
                 border-radius: 2vw;
             }
+
+
         }
         
         #name-email{
@@ -58,10 +60,47 @@ main{
             }
         }
     }
+
+    nav {
+        display: flex;
+        flex-direction: column;
+        gap: 1vw;
+        width: 100%;
+        margin-top: 3vw;
+
+        .link{
+           display: flex;
+           align-items: center;
+           gap: 1vw;
+           padding: .7vw 0;
+           transition: all 0.2s ease-in-out;
+
+           a{
+               font-size: .92em;
+               color: #F5F5F5;
+               text-decoration: none;
+           }
+
+           img{
+               width: 1.5vw;
+               height: 1.5vw;
+               object-fit: cover;
+  
+           }
+
+           &:hover{
+                background-color: #333333;
+                border-radius: .5vw;
+                cursor: pointer;
+               
+           }
+        }
+    }
     
 }
 
 .main-content{
+    position: relative;
     position: fixed;
     margin-top: 1vw;
     top: 0;
@@ -69,7 +108,92 @@ main{
     width: 82%;
     height: 110%;
     border-top-left-radius: 20px; 
-    background-color: #ffffff;
     background-image: url('./Assets/2560x1600.jpg');
     background-size: cover;
+    padding: 2vw 4vw;
+
+
+    header{
+        color: #E0E0E0;
+        width: 100%;
+
+        h1{
+            font-size: 1.7em;
+            // text-transform: uppercase;
+            font-weight: 700;
+            // color: #333333;
+       
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+        }
+
+        p{
+            font-size: .9em;
+            line-height: 1.8em;
+      
+        }
+        
+    }
+
+    .tasks{
+        width: 100%;
+        height: 60%;
+        // background-color: red;
+        margin-top: 3vw;
+        display: flex;
+        flex-direction: column;
+        gap: 1vw;
+        overflow-y: auto;
+
+
+        .task{
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        
+            padding: 1vw 1.3vw;
+            border-radius: .7vw;
+            transition: background-color 0.2s ease-in-out;
+            background-color: #00000087;
+            color: #F5F5F5;
+            // backdrop-filter: blur(15vw);
+            
+
+            &:hover{
+                background-color: #333333;
+            }
+
+
+            .text-check{
+                display: flex;
+                align-items: center;
+                gap: .7vw;
+
+                label{
+                    font-size: 1em;
+                }
+            }
+
+            i{
+                font-size: 1.5em;
+                color: #F5F5F5;
+            }
+        }
+    }
+
+    .add-task{
+        width: 100%;
+        margin-top: 4vw;
+        
+
+        input{
+            width: 100%;
+            padding: 1vw;
+            border-radius: .7vw;
+            border: none;
+            outline: none;
+            font-size: 1em;
+            color: #F5F5F5;
+            background-color: #000000e7;
+        }
+    }
 }
