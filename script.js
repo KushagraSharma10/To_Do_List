@@ -3,16 +3,15 @@ const tasksContainer = document.querySelector(".tasks");
 const addInput = document.querySelector("#add");
 const dynamicDate = document.querySelector(".heading p")
 
-console.log(dynamicDate)
 
-function dynamic_Date(){
+function DynamicDate(){
   const date = new Date();
 
 const days = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
 const dayName = days[date.getDay()];
 
 const day = date.getDate();
-console.log(day)
+
 
 
 const months = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
@@ -21,7 +20,7 @@ const monthName = months[date.getMonth()];
 dynamicDate.innerHTML = `${dayName}, ${day} ${monthName}`;
 }
 
-dynamic_Date()
+DynamicDate()
 
 let tasksAll = [];
 
@@ -112,11 +111,6 @@ function createTaskElement() {
   reorderTasks();
 }
 
-// const tasksNew = [];
-// const tasksCompleted = [];
-// const removedTasks = [];
-
-// 5. Reorder tasks based on completed/active status
 function reorderTasks() {
   tasksContainer.innerHTML = "";
 
@@ -157,7 +151,28 @@ function reorderTasks() {
   });
 
 
-  console.log(tasksAll, tasksCompleted, removedTasks , tasksNew)
+}
+
+function showFilteredTasks(type) {
+  tasksContainer.innerHTML = "";
+
+  let filteredTasks = [];
+
+  if (type === "completed") {
+    filteredTasks = tasksAll.filter(task => task.completed && !task.removed);
+  } else if (type === "new") {
+    filteredTasks = tasksAll.filter(task => !task.completed && !task.removed);
+  } else if (type === "removed") {
+    filteredTasks = tasksAll.filter(task => task.removed);
+  } else {
+    // "all" or "my day"
+    filteredTasks = tasksAll;
+    reorderTasks();
+  }
+
+  filteredTasks.forEach(task => {
+    tasksContainer.appendChild(task.element);
+  });
 }
 
 addBtn.addEventListener("click", createTaskElement);
@@ -167,3 +182,16 @@ addInput.addEventListener("keypress", function (event) {
     createTaskElement();
   }
 })
+
+const navLinks = document.querySelectorAll(".link");
+
+navLinks.forEach(link => {
+  link.addEventListener("click", () => {
+    const type = link.getAttribute("data-type");
+    showFilteredTasks(type);
+
+    if (type === "all") {
+      reorderTasks(); // ✅ Ye sirf "My Tasks" me chalega
+    }
+  });
+});
