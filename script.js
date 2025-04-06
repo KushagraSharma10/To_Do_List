@@ -2,31 +2,24 @@ const addBtn = document.querySelector("#add-btn");
 const tasksContainer = document.querySelector(".tasks");
 const addInput = document.querySelector("#add");
 const dynamicDate = document.querySelector(".heading p")
+const navLinks = document.querySelectorAll(".link");
+const notifiCount = document.querySelectorAll(".link span")
 
-
-
-
-function DynamicDate(){
+function showDate() {
   const date = new Date();
-
-const days = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
-const dayName = days[date.getDay()];
-
-const day = date.getDate();
-
-
-
-const months = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
-const monthName = months[date.getMonth()];
-
-dynamicDate.innerHTML = `${dayName}, ${day} ${monthName}`;
+  const days = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
+  const dayName = days[date.getDay()];
+  const day = date.getDate();
+  const months = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
+  const monthName = months[date.getMonth()];
+  dynamicDate.innerHTML = `${dayName}, ${day} ${monthName}`;
 }
 
-DynamicDate()
+showDate();
 
 let tasksAll = [];
 
-function createTaskObject(taskText) {
+function makeTask(taskText) {
   return {
     id: `task-${Date.now()}`,
     text: taskText,
@@ -36,8 +29,7 @@ function createTaskObject(taskText) {
   };
 }
 
-// 2. Create the DOM element for the task
-function createTaskElementDOM(task) {
+function makeTaskElement(task) {
   const taskDiv = document.createElement("div");
   taskDiv.className = "task";
   taskDiv.innerHTML = `
@@ -49,18 +41,17 @@ function createTaskElementDOM(task) {
   `;
   task.element = taskDiv;
 
-  addTaskEventListeners(task);
-
+  setTaskListeners(task);
   return taskDiv;
 }
 
-function addTaskEventListeners(task) {
+function setTaskListeners(task) {
   const checkbox = task.element.querySelector('input[type="checkbox"]');
   const closeIcon = task.element.querySelector(".ri-close-line");
 
   checkbox.addEventListener("change", function () {
     task.completed = checkbox.checked;
-    reorderTasks();
+    sortTasks();
   });
 
   closeIcon.addEventListener("click", function () {
@@ -77,7 +68,6 @@ function addTaskEventListeners(task) {
     task.element.style.color = "gray";
     closeIcon.style.display = "none";
 
-    // Add undo button
     const undoBtn = document.createElement("button");
     undoBtn.textContent = "Undo";
     undoBtn.style.position = "absolute";
@@ -99,22 +89,22 @@ function addTaskEventListeners(task) {
       label.style.color = "#fefefe";
       closeIcon.style.display = "inline";
       undoBtn.remove();
-      reorderTasks();
+      sortTasks();
     });
 
-    reorderTasks();
+    sortTasks();
+    updateCounts();
   });
 }
 
-// 4. Main function to handle new task creation
-function createTaskElement() {
+function addTask() {
   const taskText = addInput.value.trim();
   if (!taskText) {
     alert("Please enter a task!");
     return;
   }
 
-  const duplicateTask = tasksAll.find(task => 
+  const duplicateTask = tasksAll.find(task =>
     task.text.trim().toLowerCase() === taskText.trim().toLowerCase()
   );
 
@@ -124,23 +114,23 @@ function createTaskElement() {
     return;
   }
 
-  const task = createTaskObject(taskText);
-  const taskDiv = createTaskElementDOM(task);
+  const task = makeTask(taskText);
+  const taskDiv = makeTaskElement(task);
 
   tasksAll.push(task);
   tasksContainer.appendChild(taskDiv);
   addInput.value = "";
-  reorderTasks();
+  sortTasks();
+  updateCounts();
 }
 
-function reorderTasks() {
+function sortTasks() {
   tasksContainer.innerHTML = "";
 
   const tasksNew = [];
   const tasksCompleted = [];
   const removedTasks = [];
 
-  // Categorize tasks
   for (let i = 0; i < tasksAll.length; i++) {
     const t = tasksAll[i];
     if (t.removed) {
@@ -157,32 +147,29 @@ function reorderTasks() {
     tasksContainer.style.transition = "none";
   }, 300);
 
-  // Append unchecked tasks first
   tasksNew.forEach((t) => {
     tasksContainer.appendChild(t.element);
   });
 
-  // Insert checked tasks right after last unchecked
   tasksCompleted.forEach((t) => {
     tasksContainer.appendChild(t.element);
   });
 
-  // Insert removed tasks after checked ones
   removedTasks.forEach((t) => {
     tasksContainer.appendChild(t.element);
   });
 
-
+  updateCounts();
 }
 
-function showFilteredTasks(type) {
+function filterTasks(type) {
   tasksContainer.innerHTML = "";
 
   let filteredTasks = [];
 
-  document.querySelector(".heading h1").textContent = 
-  type === "all" ? "My Tasks" : 
-  type.charAt(0).toUpperCase() + type.slice(1) + " Tasks";
+  document.querySelector(".heading h1").textContent =
+    type === "all" ? "My Tasks" :
+    type.charAt(0).toUpperCase() + type.slice(1) + " Tasks";
 
   if (type === "completed") {
     filteredTasks = tasksAll.filter(task => task.completed && !task.removed);
@@ -192,7 +179,7 @@ function showFilteredTasks(type) {
     filteredTasks = tasksAll.filter(task => task.removed);
   } else {
     filteredTasks = tasksAll;
-    reorderTasks();
+    sortTasks();
   }
 
   filteredTasks.forEach(task => {
@@ -200,23 +187,36 @@ function showFilteredTasks(type) {
   });
 }
 
-addBtn.addEventListener("click", createTaskElement);
+addBtn.addEventListener("click", addTask);
 
 addInput.addEventListener("keypress", function (event) {
   if (event.key === "Enter") {
-    createTaskElement();
+    addTask();
   }
-})
-
-const navLinks = document.querySelectorAll(".link");
+});
 
 navLinks.forEach(link => {
   link.addEventListener("click", () => {
     const type = link.getAttribute("data-type");
-    showFilteredTasks(type);
+    filterTasks(type);
 
     if (type === "all") {
-      reorderTasks(); 
+      sortTasks();
     }
   });
 });
+
+function updateCounts() {
+  const allCount = tasksAll.length;
+  const completedCount = tasksAll.filter(task => task.completed && !task.removed).length;
+  const newCount = tasksAll.filter(task => !task.completed && !task.removed).length;
+  const removedCount = tasksAll.filter(task => task.removed).length;
+
+  const counts = [allCount, completedCount, newCount, removedCount];
+
+  notifiCount.forEach((span, index) => {
+    span.textContent = counts[index] > 0 ? counts[index] : "";
+  });
+}
+
+updateCounts();

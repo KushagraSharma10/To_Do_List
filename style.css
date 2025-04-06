@@ -6,7 +6,8 @@
   font-family: "Plus Jakarta Sans";
 }
 
-html, body {
+html,
+body {
   height: 100%;
   width: 100%;
 }
@@ -45,11 +46,11 @@ main {
 }
 .vertical-nav header #name-email h1 {
   font-size: 1.2em;
-  color: #E0E0E0;
+  color: #e0e0e0;
 }
 .vertical-nav header #name-email p {
   font-size: 0.8em;
-  color: #E0E0E0;
+  color: #e0e0e0;
 }
 .vertical-nav nav {
   display: flex;
@@ -61,13 +62,18 @@ main {
 .vertical-nav nav .link {
   display: flex;
   align-items: center;
-  gap: 1vw;
+  justify-content: space-between;
   padding: 0.7vw 0;
   transition: all 0.2s ease-in-out;
 }
+.vertical-nav nav .link .title {
+  display: flex;
+  align-items: center;
+  gap: 0.5vw;
+}
 .vertical-nav nav .link a {
   font-size: 0.92em;
-  color: #F5F5F5;
+  color: #f5f5f5;
   text-decoration: none;
 }
 .vertical-nav nav .link img {
@@ -80,6 +86,12 @@ main {
   background-color: #333333;
   border-radius: 0.5vw;
   cursor: pointer;
+}
+.vertical-nav nav .link span {
+  text-align: end;
+  padding-right: 0.4vw;
+  font-size: 0.9em;
+  color: #f5f5f5;
 }
 
 .main-content {
@@ -95,7 +107,7 @@ main {
   padding: 2vw 4vw;
 }
 .main-content header {
-  color: #E0E0E0;
+  color: #e0e0e0;
   width: 100%;
 }
 .main-content header h1 {
@@ -114,8 +126,10 @@ main {
   display: flex;
   flex-direction: column;
   gap: 1vw;
-  scrollbar-width: thin; /* For Firefox */
-  scrollbar-color: #4CAF50 rgba(42, 38, 38, 0.662745098); /* For Firefox */
+  scrollbar-width: thin;
+  /* For Firefox */
+  scrollbar-color: #4caf50 rgba(42, 38, 38, 0.662745098);
+  /* For Firefox */
   overflow-y: hidden;
 }
 .main-content .tasks:hover {
@@ -130,7 +144,7 @@ main {
   border-radius: 0.7vw;
   transition: background-color 0.2s ease-in-out;
   background-color: rgba(0, 0, 0, 0.7058823529);
-  color: #F5F5F5;
+  color: #f5f5f5;
 }
 .main-content .tasks .task:hover {
   background-color: rgba(16, 14, 14, 0.662745098);
@@ -156,8 +170,8 @@ main {
   justify-content: center;
 }
 .main-content .tasks .task .text-check input[type=checkbox]:checked {
-  background-color: #4CAF50;
-  border-color: #4CAF50;
+  background-color: #4caf50;
+  border-color: #4caf50;
   position: relative;
 }
 .main-content .tasks .task .text-check input[type=checkbox]:checked::before {
@@ -167,7 +181,7 @@ main {
   font-weight: bold;
 }
 .main-content .tasks .task .text-check input[type=checkbox]:hover {
-  border-color: #4CAF50;
+  border-color: #4caf50;
 }
 .main-content .tasks .task .text-check label {
   font-size: 0.9em;
@@ -175,7 +189,7 @@ main {
 }
 .main-content .tasks .task i {
   font-size: 1.3em;
-  color: #F5F5F5;
+  color: #f5f5f5;
 }
 .main-content .add-task {
   width: 100%;
@@ -189,7 +203,7 @@ main {
   border: none;
   outline: none;
   font-size: 0.9em;
-  color: #F5F5F5;
+  color: #f5f5f5;
   background-color: rgba(0, 0, 0, 0.7058823529);
 }
 .main-content .add-task button {
@@ -201,7 +215,7 @@ main {
   top: 0.4vw;
   border-radius: 0.7vw;
   align-items: center;
-  background-color: #76FF03;
+  background-color: #76ff03;
   gap: 0.4vw;
   border: none;
   padding: 0.4vw 1vw;
