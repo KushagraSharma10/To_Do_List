@@ -1,11 +1,101 @@
-const addBtn = document.querySelector('#add-btn');
-const tasksContainer = document.querySelector('.tasks');
-const addInput = document.querySelector('#add');
+const addBtn = document.querySelector("#add-btn");
+const tasksContainer = document.querySelector(".tasks");
+const addInput = document.querySelector("#add");
+const dynamicDate = document.querySelector(".heading p")
 
+console.log(dynamicDate)
+
+function dynamic_Date(){
+  const date = new Date();
+
+const days = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
+const dayName = days[date.getDay()];
+
+const day = date.getDate();
+console.log(day)
+
+
+const months = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
+const monthName = months[date.getMonth()];
+
+dynamicDate.innerHTML = `${dayName}, ${day} ${monthName}`;
+}
+
+dynamic_Date()
 
 let tasksAll = [];
 
-// Create a new task
+function createTaskObject(taskText) {
+  return {
+    id: `task-${Date.now()}`,
+    text: taskText,
+    completed: false,
+    removed: false,
+    element: null,
+  };
+}
+
+// 2. Create the DOM element for the task
+function createTaskElementDOM(task) {
+  const taskDiv = document.createElement("div");
+  taskDiv.className = "task";
+  taskDiv.innerHTML = `
+    <div class="text-check">
+      <input type="checkbox" id="${task.id}">
+      <label for="${task.id}">${task.text}</label>
+    </div>
+    <i class="ri-close-line"></i>
+  `;
+  task.element = taskDiv;
+
+  addTaskEventListeners(task);
+
+  return taskDiv;
+}
+
+function addTaskEventListeners(task) {
+  const checkbox = task.element.querySelector('input[type="checkbox"]');
+  const closeIcon = task.element.querySelector(".ri-close-line");
+
+  checkbox.addEventListener("change", function () {
+    task.completed = checkbox.checked;
+    reorderTasks();
+  });
+
+  closeIcon.addEventListener("click", function () {
+    if (task.completed) {
+      task.completed = false;
+      const checkbox = task.element.querySelector('input[type="checkbox"]');
+      checkbox.checked = false;
+    }
+
+    task.removed = true;
+    const label = task.element.querySelector("label");
+    label.style.textDecoration = "line-through";
+    label.style.color = "gray";
+    task.element.style.color = "gray";
+    closeIcon.style.display = "none";
+
+    // Add undo button
+    const undoBtn = document.createElement("button");
+    undoBtn.textContent = "Undo";
+    undoBtn.classList.add("undo-btn");
+    closeIcon.parentNode.appendChild(undoBtn);
+
+    undoBtn.addEventListener("click", () => {
+      task.removed = false;
+      label.style.textDecoration = "none";
+      label.style.color = "#fefefe";
+      closeIcon.style.display = "inline";
+      undoBtn.remove();
+      reorderTasks();
+    });
+
+    reorderTasks();
+  });
+}
+
+// 4. Main function to handle new task creation
 function createTaskElement() {
   const taskText = addInput.value.trim();
   if (!taskText) {
@@ -13,94 +103,67 @@ function createTaskElement() {
     return;
   }
 
-  const taskId = `task-${Date.now()}`;
-  const taskDiv = document.createElement('div');
-  taskDiv.className = 'task';
-  taskDiv.innerHTML = `
-    <div class="text-check">
-      <input type="checkbox" id="${taskId}">
-      <label for="${taskId}">${taskText}</label>
-    </div>
-    <i class="ri-close-line"></i>
-  `;
+  const task = createTaskObject(taskText);
+  const taskDiv = createTaskElementDOM(task);
 
-  // Create a task object
-  const task = {
-    id: taskId,
-    text: taskText,
-    completed: false,
-    removed: false,
-    element: taskDiv,
-  };
-
-  // Add task to the all tasks array
   tasksAll.push(task);
-
-  // Get checkbox and close icon elements
-  const checkbox = taskDiv.querySelector('input[type="checkbox"]');
-  const closeIcon = taskDiv.querySelector('.ri-close-line');
-
-  // When checkbox changes, update its status and reorder tasks
-  checkbox.addEventListener('change', function () {
-    task.completed = checkbox.checked;
-    reorderTasks();
-  });
-
-  // When close icon is clicked, mark as removed and then update view
-  closeIcon.addEventListener('click', function () {
-    task.removed = true;
-    taskDiv.style.textDecoration = 'line-through';
-    taskDiv.style.color = 'gray';
-    closeIcon.style.opacity = '0';
-    setTimeout(() => {
-   
-      if (tasksContainer.contains(taskDiv)) {
-        tasksContainer.removeChild(taskDiv);
-      }
-      reorderTasks();
-    }, 500);
-  });
-
-  // Add the new task element to the container
   tasksContainer.appendChild(taskDiv);
-  addInput.value = '';
-
-  // Reorder tasks so new tasks show up in the correct section
+  addInput.value = "";
   reorderTasks();
 }
 
-// Reorder tasks based on their status using simple loops
+// const tasksNew = [];
+// const tasksCompleted = [];
+// const removedTasks = [];
+
+// 5. Reorder tasks based on completed/active status
 function reorderTasks() {
-  tasksContainer.innerHTML = '';
+  tasksContainer.innerHTML = "";
 
-  // Temporary arrays to hold new and completed tasks
-  let tasksNew = [];
-  let tasksCompleted = [];
+  const tasksNew = [];
+  const tasksCompleted = [];
+  const removedTasks = [];
 
-  // Loop through all tasks
+  // Categorize tasks
   for (let i = 0; i < tasksAll.length; i++) {
     const t = tasksAll[i];
     if (t.removed) {
-      // Skip removed tasks (they can be handled separately if needed)
-      continue;
-    }
-    if (t.completed) {
+      removedTasks.push(t);
+    } else if (t.completed) {
       tasksCompleted.push(t);
-      console.log("task completed", tasksCompleted)
     } else {
       tasksNew.push(t);
-      console.log("taskNew: ", tasksNew)
     }
   }
 
-  // Append new tasks first
-  for (let i = 0; i < tasksNew.length; i++) {
-    tasksContainer.appendChild(tasksNew[i].element);
-  }
-  // Then append completed tasks
-  for (let i = 0; i < tasksCompleted.length; i++) {
-    tasksContainer.appendChild(tasksCompleted[i].element);
-  }
+  tasksContainer.style.transition = "all 0.3s ease";
+  setTimeout(() => {
+    tasksContainer.style.transition = "none";
+  }, 300);
+
+  // Append unchecked tasks first
+  tasksNew.forEach((t) => {
+    tasksContainer.appendChild(t.element);
+  });
+
+  // Insert checked tasks right after last unchecked
+  tasksCompleted.forEach((t) => {
+    tasksContainer.appendChild(t.element);
+  });
+
+  // Insert removed tasks after checked ones
+  removedTasks.forEach((t) => {
+    tasksContainer.appendChild(t.element);
+  });
+
+
+  console.log(tasksAll, tasksCompleted, removedTasks , tasksNew)
 }
 
-addBtn.addEventListener('click', createTaskElement);
+addBtn.addEventListener("click", createTaskElement);
+
+addInput.addEventListener("keypress", function (event) {
+  if (event.key === "Enter") {
+    createTaskElement();
+  }
+})
