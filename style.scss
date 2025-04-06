@@ -152,8 +152,8 @@ main{
             display: flex;
             align-items: center;
             justify-content: space-between;
-        
-            padding: .9vw 1.3vw;
+            position: relative;
+            padding: .7vw 1.3vw;
             border-radius: .7vw;
             transition: background-color 0.2s ease-in-out;
             background-color: #00000087;

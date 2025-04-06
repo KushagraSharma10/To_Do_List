@@ -78,6 +78,16 @@ function addTaskEventListeners(task) {
     // Add undo button
     const undoBtn = document.createElement("button");
     undoBtn.textContent = "Undo";
+    undoBtn.style.position = "absolute";
+    undoBtn.style.top = ".3vw";
+    undoBtn.style.right = ".3vw";
+    undoBtn.style.padding = ".4vw .7vw";
+    undoBtn.style.border = 'none'
+    undoBtn.style.backgroundColor = '#FFC107'
+    undoBtn.style.borderRadius = ".4vw";
+    undoBtn.style.fontSize = ".9em";
+    undoBtn.style.cursor = "pointer";
+    undoBtn.style.fontWeight = "700";
     undoBtn.classList.add("undo-btn");
     closeIcon.parentNode.appendChild(undoBtn);
 
@@ -99,6 +109,16 @@ function createTaskElement() {
   const taskText = addInput.value.trim();
   if (!taskText) {
     alert("Please enter a task!");
+    return;
+  }
+
+  const duplicateTask = tasksAll.find(task => 
+    task.text.trim().toLowerCase() === taskText.trim().toLowerCase()
+  );
+
+  if (duplicateTask) {
+    alert("Task already exists!");
+    addInput.value = ""
     return;
   }
 
