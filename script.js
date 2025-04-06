@@ -4,6 +4,8 @@ const addInput = document.querySelector("#add");
 const dynamicDate = document.querySelector(".heading p")
 
 
+
+
 function DynamicDate(){
   const date = new Date();
 
@@ -178,6 +180,10 @@ function showFilteredTasks(type) {
 
   let filteredTasks = [];
 
+  document.querySelector(".heading h1").textContent = 
+  type === "all" ? "My Tasks" : 
+  type.charAt(0).toUpperCase() + type.slice(1) + " Tasks";
+
   if (type === "completed") {
     filteredTasks = tasksAll.filter(task => task.completed && !task.removed);
   } else if (type === "new") {
@@ -185,7 +191,6 @@ function showFilteredTasks(type) {
   } else if (type === "removed") {
     filteredTasks = tasksAll.filter(task => task.removed);
   } else {
-    // "all" or "my day"
     filteredTasks = tasksAll;
     reorderTasks();
   }
@@ -211,7 +216,7 @@ navLinks.forEach(link => {
     showFilteredTasks(type);
 
     if (type === "all") {
-      reorderTasks(); // ✅ Ye sirf "My Tasks" me chalega
+      reorderTasks(); 
     }
   });
 });

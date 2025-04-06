@@ -129,11 +129,11 @@ main {
   padding: 0.7vw 1.3vw;
   border-radius: 0.7vw;
   transition: background-color 0.2s ease-in-out;
-  background-color: rgba(0, 0, 0, 0.5294117647);
+  background-color: rgba(0, 0, 0, 0.7058823529);
   color: #F5F5F5;
 }
 .main-content .tasks .task:hover {
-  background-color: rgba(42, 38, 38, 0.662745098);
+  background-color: rgba(16, 14, 14, 0.662745098);
 }
 .main-content .tasks .task .text-check {
   display: flex;
