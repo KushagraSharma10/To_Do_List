@@ -11,15 +11,15 @@ body {
     width: 100%;
 }
 
-@font-face {
-    font-family: "Plus Jakarta Sans";
-    src: url('./fonts/PlusJakartaSans-Regular.woff');
-}
+// @font-face {
+//     font-family: "Plus Jakarta Sans";
+//     src: url('./fonts/PlusJakartaSans-Regular.woff');
+// }
 
-@font-face {
-    font-family: "Plus Jakarta Sans";
-    src: url('./fonts/PlusJakartaSans-Regular.woff2');
-}
+// @font-face {
+//     font-family: "Plus Jakarta Sans";
+//     src: url('./fonts/PlusJakartaSans-Regular.woff2');
+// }
 
 main {
     width: 100%;
@@ -157,9 +157,9 @@ main {
         gap: 1vw;
         overflow-x: hidden;
         scrollbar-width: thin;
-        /* For Firefox */
+       
         scrollbar-color: #4caf50 #2a2626a9;
-        /* For Firefox */
+        
         overflow-y: hidden;
 
         &:hover {
@@ -201,7 +201,7 @@ main {
                     justify-content: center;
 
                     &:checked {
-                        background-color: #4caf50; // Green fill
+                        background-color: #4caf50; 
                         border-color: #4caf50;
                         position: relative;
 

@@ -21,14 +21,6 @@ This app provides a smooth user experience with task filtering, animations, and 
 
 ---
 
-## 🖼️ Preview
-
-![App Screenshot]('./Assets/landingPage.png')
-
-> _(Replace above with a real screenshot URL of your app UI if you host it or take one locally)_
-
----
-
 ## ⚙️ Technologies Used
 
 | Technology  | Purpose                      |

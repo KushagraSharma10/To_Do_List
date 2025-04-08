@@ -12,14 +12,6 @@ body {
   width: 100%;
 }
 
-@font-face {
-  font-family: "Plus Jakarta Sans";
-  src: url("./fonts/PlusJakartaSans-Regular.woff");
-}
-@font-face {
-  font-family: "Plus Jakarta Sans";
-  src: url("./fonts/PlusJakartaSans-Regular.woff2");
-}
 main {
   width: 100%;
   height: 100%;
@@ -136,9 +128,7 @@ main {
   gap: 1vw;
   overflow-x: hidden;
   scrollbar-width: thin;
-  /* For Firefox */
   scrollbar-color: #4caf50 rgba(42, 38, 38, 0.662745098);
-  /* For Firefox */
   overflow-y: hidden;
 }
 .main-content .tasks:hover {

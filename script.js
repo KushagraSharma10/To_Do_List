@@ -202,23 +202,6 @@ function sortTasks() {
     }
   }
 
-  // tasksContainer.style.transition = "all 0.3s ease";
-  // setTimeout(() => {
-  //   tasksContainer.style.transition = "none";
-  // }, 300);
-
-  // tasksNew.forEach((t) => {
-  //   tasksContainer.appendChild(t.element);
-  // });
-
-  // tasksCompleted.forEach((t) => {
-  //   tasksContainer.appendChild(t.element);
-  // });
-
-  // removedTasks.forEach((t) => {
-  //   tasksContainer.appendChild(t.element);
-  // });
-
   gsap.to(tasksContainer, {
     opacity: 0,
     duration: 0.2,
@@ -304,7 +287,7 @@ navLinks.forEach((link) => {
   link.addEventListener("click", () => {
     const type = link.getAttribute("data-type");
     filterTasks(type);
-
+R
     if (type === "all") {
       sortTasks();
     }
@@ -313,12 +296,9 @@ navLinks.forEach((link) => {
 
 function updateCounts() {
   const allCount = tasksAll.length;
-  const completedCount = tasksAll.filter(
-    (task) => task.completed && !task.removed
-  ).length;
-  const newCount = tasksAll.filter(
-    (task) => !task.completed && !task.removed
-  ).length;
+  
+  const completedCount = tasksAll.filter((task) => task.completed && !task.removed).length;
+  const newCount = tasksAll.filter((task) => !task.completed && !task.removed).length;
   const removedCount = tasksAll.filter((task) => task.removed).length;
 
   const counts = [allCount, completedCount, newCount, removedCount];
