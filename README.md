@@ -19,6 +19,13 @@ This app provides a smooth user experience with task filtering, animations, and 
 - 🎨 Clean and modern UI with dark-glass theme
 - 🖱 Hover interactions and responsive layout
 
+
+---
+
+## 🖼️ Preview
+
+![Preview]('./Assets/landingPage.png')
+
 ---
 
 ## ⚙️ Technologies Used
@@ -37,7 +44,7 @@ This app provides a smooth user experience with task filtering, animations, and 
 
 1. Clone this repo:
    ```bash
-   git clone https://github.com/your-username/todo-list-app.git
+   git clone https://github.com/KushagraSharma10/To_Do_List.git
    ```
 
 2. Open `index.html` in your browser:
