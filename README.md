@@ -24,7 +24,7 @@ This app provides a smooth user experience with task filtering, animations, and 
 
 ## 🖼️ Preview
 
-[Preview]('./landingPage.png')
+![Preview](./Assets/landingPage.png)
 
 ---
 
